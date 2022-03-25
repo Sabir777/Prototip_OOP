@@ -34,16 +34,19 @@ void Window_obj_init::init_window() {
 	if (!RegisterClassEx(&wc)) //регистрация класса окна
 		throw std::runtime_error("Error, can't register main window class!");
 
-	//изменение размера окна (RECT) по заданному размеру рабочей области
-	RECT windowRC{ 0, 0, width_window, height_window };
-	AdjustWindowRect(&windowRC, WS_DLGFRAME | WS_SYSMENU | WS_MINIMIZEBOX | WS_MAXIMIZE, false);
-
-	//создание окна
 	m_hwnd = CreateWindowEx(0, name_class_window.c_str(),
-		name_header_window.c_str(), WS_DLGFRAME | WS_SYSMENU | WS_MINIMIZEBOX | WS_MAXIMIZE,
-		(GetSystemMetrics(SM_CXSCREEN) - windowRC.right) / 2, //расположение окна в центре экрана по горизонтали
-		(GetSystemMetrics(SM_CYSCREEN) - windowRC.bottom) / 2, //расположение окна в центре экрана по вертикали
-		windowRC.right, windowRC.bottom, nullptr, nullptr, nullptr, this);
+		name_header_window.c_str(), WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX ,
+		(GetSystemMetrics(SM_CXSCREEN) - width_window) / 2, //расположение окна в центре экрана по горизонтали
+		(GetSystemMetrics(SM_CYSCREEN) - height_window) / 2, //расположение окна в центре экрана по вертикали
+		width_window, height_window, nullptr, nullptr, nullptr, this);
+	
+	RECT rect;
+	GetClientRect(m_hwnd, &rect);
+	width_window += width_window - (rect.right - rect.left);
+	height_window += height_window - (rect.bottom - rect.top);
+
+	SetWindowPos(m_hwnd, HWND_TOP, 0, 0, width_window, height_window, SWP_NOMOVE | SWP_NOZORDER);
+
 
 	if (!m_hwnd)
 		throw std::runtime_error("Error, can't create main window!");

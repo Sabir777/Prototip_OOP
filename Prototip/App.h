@@ -6,7 +6,6 @@
 
 class App {
 public:
-	std::wstring time(); //получаю текущее время
 	int wm_timer(HWND m_hwnd); //обрабатываю события таймера
 	int wm_paint(HWND m_hwnd); //перерисовываю окно
 };

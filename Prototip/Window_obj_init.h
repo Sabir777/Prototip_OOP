@@ -1,7 +1,7 @@
 ﻿#pragma comment(linker,"\"/manifestdependency:type='win32' \
 name='Microsoft.Windows.Common-Controls' version='6.0.0.0' \
 processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
-							//манифест
+	//манифест
 
 #pragma once
 #include <Windows.h>
@@ -30,8 +30,8 @@ private:
 	const std::wstring name_class_window{ L"My_Window" }; //задаю имя класса окна
 	const std::wstring name_header_window{ L"Clock" }; //задаю заголовок окна
 	HWND m_hwnd{}; //дескриптор главного окна приложения
-	const int width_window{ 350 }; //ширина окна
-	const int height_window{ 250 }; //высота окна
+	int width_window{ 403 }; //ширина окна
+	int height_window{ 403 }; //высота окна
 	const int ID_TIMER{ 1 }; //ID таймера - номер таймера
 	
 /*-------------------------------------------------------------
